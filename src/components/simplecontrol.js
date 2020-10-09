@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import axios from "axios";
+import {host, path} from "../utils";
 
 class simplecontrol extends Component {
     constructor(props) {
@@ -12,13 +13,13 @@ class simplecontrol extends Component {
     }
 
     checkState() {
-        axios(`http://localhost:8080/status`)
+        axios(path.status)
         .then(data => this.setState({stats: data.data.data}))
         .catch(err => console.error(err))
     }
 
     switchState(state) {
-        axios(`http://localhost:8080/${state}`)
+        axios(`${host}/${state}`)
         .then(data =>this.setState({stats: data.data.data}))
         .catch(err => console.error(err))
     }
