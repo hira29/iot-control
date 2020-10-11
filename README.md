@@ -1,7 +1,7 @@
 # LED Control using NodeMCU via Web
 
 <div align="center">
-    <img src="preview.png" width=300>
+    <img src="preview.png" width=500>
 </div>
 
 This is a web for controlling LED that connected to NodeMCU using REST API.
