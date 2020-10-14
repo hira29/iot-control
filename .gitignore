@@ -14,6 +14,7 @@
 # misc
 .DS_Store
 .env*
+*.swp
 !.env.example
 
 npm-debug.log*
