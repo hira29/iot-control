@@ -3,7 +3,6 @@ import Grid from "@material-ui/core/Grid";
 import Switch from "./Switch";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
@@ -32,13 +31,13 @@ const LED = ({id, lastActivated, todayUsage}) => {
         <Grid item xs={4}>
           <Box textAlign="center">
             <Typography variant="h6" className={classes.title}> Last activated </Typography>
-            <Typography variant="h4" className={classes.text}> 2 hours ago </Typography>
+            <Typography variant="h4" className={classes.text}>N/A</Typography>
           </Box>
         </Grid>
         <Grid item xs={4}>
           <Box textAlign="center">
             <Typography variant="h6" className={classes.title}> Today usage </Typography>
-            <Typography variant="h4" className={classes.text}>2h 13m</Typography>
+            <Typography variant="h4" className={classes.text}>N/A</Typography>
           </Box>
         </Grid>
       </Grid>
