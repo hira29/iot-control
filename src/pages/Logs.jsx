@@ -5,8 +5,18 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  lamp : {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "10pt"
+    }
+  }
+}))
 
 const Logs = () => {
+  const classes = useStyles();
 
   return(
     <TableContainer components="div">
@@ -22,19 +32,19 @@ const Logs = () => {
         <TableBody>
           <TableRow>
             <TableCell align="center">1</TableCell>
-            <TableCell align="center">LED 1</TableCell>
+            <TableCell align="center" className={classes.lamp}>LED 1</TableCell>
             <TableCell align="center">ON</TableCell>
             <TableCell align="center">2020-10-12 20:22:29</TableCell>
           </TableRow>
           <TableRow>
             <TableCell align="center">2</TableCell>
-            <TableCell align="center">LED 1</TableCell>
+            <TableCell align="center" className={classes.lamp}> LED 1</TableCell>
             <TableCell align="center">OFF</TableCell>
             <TableCell align="center">2020-10-12 16:27:15</TableCell>
           </TableRow>
           <TableRow>
             <TableCell align="center">3</TableCell>
-            <TableCell align="center">LED 1</TableCell>
+            <TableCell align="center" className={classes.lamp}>LED 1</TableCell>
             <TableCell align="center">ON</TableCell>
             <TableCell align="center">2020-10-12 14:11:15</TableCell>
           </TableRow>
