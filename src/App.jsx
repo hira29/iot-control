@@ -3,7 +3,7 @@ import Container from "@material-ui/core/Container";
 import Content from "./components/Content";
 import Control from "./pages/controller";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Logs from "./pages/Logs";
+import Logs from "./pages/logs";
 import React, {useState} from "react";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
