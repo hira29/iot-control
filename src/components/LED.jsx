@@ -5,7 +5,7 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
 import axios from "axios";
-import { path, query } from "../utility/utils";
+import { path } from "../utility/utils";
 
 const useStyles = makeStyles(theme => ({
   title : {
@@ -40,7 +40,6 @@ const getDuration = (start, end) => {
 const LED = ({led, log}) => {
   const classes = useStyles();
   const [lastusage, setLastusage] = useState(null)
-  const [duration, setDuration] = useState(null)
   const [buttonstate, setButtonstate] = useState(false)
   log.size = 3
 
@@ -62,25 +61,7 @@ const LED = ({led, log}) => {
         const start = new Date(obj.content[on].time)
         const end = new Date()
         let lastuse = getDuration(start,end)
-//        let total = 0
 
-//      for(let i = 0; i < obj.content.length; i++) {
-//        console.log("iteration")
-//        if(obj.content[0].condition && i%2 == 0)
-//         total = obj.content[i+1]
-//          ? total + (new Date(obj.content[i+1].time) - new Date(obj.content[i].time))
-//          : total
-//        if(!obj.content[0].condition && i%2 == 0)
-//          if(i > 0)
-//           total = obj.content[i+1]
-//            ? total + (new Date(obj.content[i+1].time) - new Date(obj.content[i].time))
-//            : total
-//        
-//      }
-//      let usage = getDuration(0, total)
-//      console.log("usage:",usage)
-//      console.log("last use:",lastuse)
-//      setDuration(usage)
         setLastusage(lastuse)
       })
       .catch(err => console.error(err))
@@ -97,12 +78,6 @@ const LED = ({led, log}) => {
             <Typography variant="h4" className={classes.text}>{lastusage ? lastusage : "N/A"}</Typography>
           </Box>
         </Grid>
-        {/*<Grid item xs={4}>
-          <Box textAlign="center">
-            <Typography variant="h6" className={classes.title}> Today usage </Typography>
-            <Typography variant="h4" className={classes.text}>{duration ? duration : "N/A"}</Typography>
-          </Box>
-        </Grid>*/}
       </Grid>
   )
 }
