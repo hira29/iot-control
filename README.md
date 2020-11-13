@@ -13,7 +13,7 @@ This is a web for controlling LED that connected to NodeMCU using REST API.
 ### How To Use
 
 1. Clone/Download the repo
-2. Run `npm i` or `yarn`
+2. Go to downloaded repo then run `npm i` or `yarn`
 3. Rename **.env.example** file to **.env**
-4. Edit the `REACT_APP_API_HOSTNAME` value to the your API HOST
+4. Add the `REACT_APP_API_HOSTNAME` value with your API HOST, *example: REACT_APP_API_HOSTNAME=http://localhost:5550/*
 5. Run `npm run dev` or `yarn dev` to run development server
