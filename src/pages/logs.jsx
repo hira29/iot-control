@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import {path, query} from "../utility/utils";
 import {DataGrid} from "@material-ui/data-grid";
@@ -16,8 +16,19 @@ const columns = [
   }
 ];
 
+const sense_columns = [
+  { field: '_id', headerName: 'ID', width: 70 },
+  { field: 'sense', headerName: 'Sensor', width: 120 },
+  { field: 'data', headerName: 'Data', width: 160 },
+  {
+    field: 'time',
+    headerName: 'Time',
+    width: 130,
+  }
+]
+
 const useStyles = makeStyles(theme => ({
-  lamp : {
+  text : {
     [theme.breakpoints.down("sm")]: {
       fontSize: "10pt"
     }
@@ -26,19 +37,14 @@ const useStyles = makeStyles(theme => ({
 
 const Logs = () => {
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [rowstable1, setRowstable1] = useState([]);
-  const [rowstable2, setRowstable2] = useState([]);
+  let [rowstable1, setRowstable1] = useState([]);
+  let [rowstable2, setRowstable2] = useState([]);
+  let [rowstable3, setRowstable3] = useState([]);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const queryTable = (tablerow, led) => {
+  const queryTable = (tablerow, tableid, urlpath) => {
     axios({
       method: "post",
-      url: path.log.led,
+      url: urlpath,
       headers: {
         "content-type": "application/json"
       },
@@ -49,24 +55,24 @@ const Logs = () => {
           data.data.data.content[i].id = data.data.data.content[i]._id
           data.data.data.content[i].time = new Date(data.data.data.content[i].time).toTimeString()
         }
-        if (led === 1)
+        console.log(data.data.data)
+        if (tableid === 1)
           setRowstable1(data.data.data.content)
-        else
+        else if (tableid === 2)
           setRowstable2(data.data.data.content)
+        else if (tableid === 3)
+          setRowstable3(data.data.data.content)
       })
       .catch(err => console.error(err))
   }
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   query.led1.size = 100
   query.led2.size = 100
+  query.sensor.size = 100
 
-  queryTable(query.led1, 1)
-  queryTable(query.led2, 2)
+  queryTable(query.led1, 1, path.log.led)
+  queryTable(query.led2, 2, path.log.led)
+  queryTable(query.sensor, 3, path.log.sensor)
 
   return (
     <>
@@ -85,8 +91,17 @@ const Logs = () => {
         color="primary"
         style={{ marginTop: "2em", marginBottom: "2em" }}
       />
-      <div style={{ height: 300, width: '100%' }}>
+      <div className={classes.text} style={{ height: 300, width: '100%' }}>
         <DataGrid rows={rowstable2} columns={columns} pageSize={5} />
+      </div>
+      <Chip
+        label="Sensor"
+        variant="outlined"
+        color="primary"
+        style={{ marginTop: "2em", marginBottom: "2em" }}
+      />
+      <div className={classes.text} style={{ height: 300, width: '100%' }}>
+        <DataGrid rows={rowstable3} columns={sense_columns} pageSize={5} />
       </div>
     </>
   )
