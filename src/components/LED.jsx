@@ -37,13 +37,16 @@ const getDuration = (start, end) => {
     return duration
 }
 
-const LED = ({led, log}) => {
+const LED = ({led, log, fuzzy}) => {
   const classes = useStyles();
   const [lastusage, setLastusage] = useState(null)
   const [buttonstate, setButtonstate] = useState(false)
   log.size = 3
 
-  const changeState = () => setButtonstate(!buttonstate)
+  const changeState = () => {
+    setButtonstate(!buttonstate)
+    fuzzy()
+  }
 
   useEffect(() => {
     axios({

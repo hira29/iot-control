@@ -20,8 +20,10 @@ export default function Switch({led, trigger}) {
   setInterval(() => {
     axios(led.status)
       .then((data) => {
-        setState(data.data.data)
-        trigger();
+        if (state != data.data.data) {
+          setState(data.data.data)
+          trigger();
+        }
       })
       .catch((err) => console.error(err));
   }, 1000)

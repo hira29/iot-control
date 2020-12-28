@@ -24,51 +24,49 @@ const useStyles = makeStyles(theme => ({
 
 let val = 0;
 const Simplecontrol = () => {
-  const [sensorvalue, setSensorValue] = useState(0);
+  const [defuzzification, setDefuzzification] = useState("N/A");
   const classes = useStyles();
   query.sensor.size = 1
 
-  useEffect(() => {
-    console.log("yo")
-  })
+  const changeState = async() => {
+    let left_led = await axios(path.led1.status)
+    let right_led = await axios(path.led2.status)
 
-  setInterval(() => {
-    axios({
-      method: "post",
-      headers: {
-        "content-type": "application/json"
-      },
-      url: path.log.sensor,
-      data: query.sensor
-    })
-      .then(data => {
-        setSensorValue(data.data.data.content[0].data)
-      })
-      .catch(err => console.error(err))
-  }, 1000)
+    const left_led_state = left_led.data.data,
+          right_led_state = right_led.data.data
+
+    left_led_state && right_led_state
+      ? setDefuzzification("Middle")
+      : left_led_state
+      ? setDefuzzification("Left")
+      : right_led_state
+      ? setDefuzzification("Right")
+      : setDefuzzification("N/A")
+
+  }
 
   return (
     <Box marginTop="0.4em">
       <Box textAlign="center">
         <Typography variant="h6" className={classes.title}>
-          Sensor Value
+          Defuzzification
         </Typography>
-        <Typography variant="h4" className={classes.text}>{sensorvalue}</Typography>
+        <Typography variant="h4" className={classes.text}>{defuzzification}</Typography>
       </Box>
       <Chip
-        label="LED 1"
+        label="Left LED"
         variant="outlined"
         color="primary"
         style={{ marginTop: "2em" }}
       />
-        <LED led={path.led1} log={query.led1}/>
+        <LED led={path.led1} log={query.led1} fuzzy={changeState}/>
       <Chip
-        label="LED 2"
+        label="Right LED"
         variant="outlined"
         color="primary"
         style={{ marginTop: "2em" }}
       />
-      <LED led={path.led2} log={query.led2}/>
+      <LED led={path.led2} log={query.led2} fuzzy={changeState}/>
     </Box>
   );
 };
