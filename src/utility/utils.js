@@ -36,6 +36,6 @@ export const query = {
       size: 10,
       page: 1,
       order_by: "time",
-      order: "asc"
+      order: "desc"
     }
 }

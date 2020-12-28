@@ -103,6 +103,7 @@ const Logs = () => {
       <div className={classes.text} style={{ height: 300, width: '100%' }}>
         <DataGrid rows={rowstable3} columns={sense_columns} pageSize={5} />
       </div>
+      <div style={{paddingTop: "4em"}} />
     </>
   )
 }
