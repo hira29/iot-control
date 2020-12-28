@@ -17,18 +17,14 @@ const useStyles = makeStyles((theme) => ({
 export default function Switch({led, trigger}) {
   const [state, setState] = useState(false);
 
-  axios(led.status)
-    .then((data) => {
-      setState(data.data.data)
-    })
-    .catch((err) => console.error(err));
-
-  const changeState = () => {
-    const url = !state ? led.on : led.off
-    axios(url)
-      .then((data) => setState(data.data.data))
-      .catch((err) => console.error(err))
-  };
+  setInterval(() => {
+    axios(led.status)
+      .then((data) => {
+        setState(data.data.data)
+        trigger();
+      })
+      .catch((err) => console.error(err));
+  }, 1000)
 
   const classes = useStyles();
 
@@ -37,8 +33,8 @@ export default function Switch({led, trigger}) {
       variant="contained"
       color={state ? "primary" : "secondary"}
       onClick={() => {
-        changeState();
-        trigger();
+        //changeState();
+        //trigger();
       }}
       className={classes.btn}
     >
