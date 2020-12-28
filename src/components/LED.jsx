@@ -46,7 +46,6 @@ const LED = ({led, log}) => {
   const changeState = () => setButtonstate(!buttonstate)
 
   useEffect(() => {
-    console.log("state changed!")
     axios({
       method: "post",
       headers: {
