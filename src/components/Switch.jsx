@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import { path } from "../utility/utils";
 
 const useStyles = makeStyles((theme) => ({
   btn: {
@@ -15,19 +14,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Switch() {
+export default function Switch({led, trigger}) {
   const [state, setState] = useState(false);
 
-  axios(path.status)
-    .then((data) => setState(data.data.data))
-    .catch((err) => console.error(err));
-
-  const changeState = () => {
-    const url = !state ? path.on : path.off
-    axios(url)
-      .then((data) => setState(data.data.data))
-      .catch((err) => console.error(err))
-  };
+  setInterval(() => {
+    axios(led.status)
+      .then((data) => {
+        if (state != data.data.data) {
+          setState(data.data.data)
+          trigger();
+        }
+      })
+      .catch((err) => console.error(err));
+  }, 1000)
 
   const classes = useStyles();
 
@@ -35,7 +34,10 @@ export default function Switch() {
     <Button
       variant="contained"
       color={state ? "primary" : "secondary"}
-      onClick={changeState}
+      onClick={() => {
+        //changeState();
+        //trigger();
+      }}
       className={classes.btn}
     >
       {state ? "ON" : "OFF"}
